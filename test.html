@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Cashbox</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 10px;
+            margin: 5px 0;
+            width: 80%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .balance {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Team Cashbox</h1>
+
+    <div>
+        <input type="text" id="username" placeholder="Enter your name" />
+        <button onclick="registerUser()">Register</button>
+    </div>
+
+    <div id="welcome-message"></div>
+
+    <div class="balance">
+        Current Balance: $<span id="balance">0</span>
+    </div>
+
+    <input type="number" id="amount" placeholder="Enter amount" />
+    <div>
+        <button onclick="deposit()">Deposit</button>
+        <button onclick="withdraw()">Withdraw</button>
+    </div>
+</div>
+
+<script>
+    let balance = 0;
+    let username = "";
+
+    function registerUser() {
+        username = document.getElementById('username').value;
+        if (username) {
+            document.getElementById('welcome-message').innerText = `Welcome, ${username}!`;
+            document.getElementById('username').value = '';
+        } else {
+            alert("Please enter your name.");
+        }
+    }
+
+    function updateBalance() {
+        document.getElementById('balance').innerText = balance;
+    }
+
+    function deposit() {
+        const amount = parseFloat(document.getElementById('amount').value);
+        if (isNaN(amount) || amount <= 0) {
+            alert("Please enter a valid amount.");
+            return;
+        }
+        balance += amount;
+        updateBalance();
+        document.getElementById('amount').value = '';
+    }
+
+    function withdraw() {
+        const amount = parseFloat(document.getElementById('amount').value);
+        if (isNaN(amount) || amount <= 0) {
+            alert("Please enter a valid amount.");
+            return;
+        }
+        if (amount > balance) {
+            alert("Insufficient funds.");
+            return;
+        }
+        balance -= amount;
+        updateBalance();
+        document.getElementById('amount').value = '';
+    }
+</script>
+
+</body>
+</html>
